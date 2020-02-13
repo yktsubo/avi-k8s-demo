@@ -6,6 +6,7 @@ metadata:
   labels:
     feature: http-redirect-by-service 
   annotations:
+    # Redirect-HTTPS must be created in AVI before applying this manifest
     avi_proxy: '{"virtualservice": {"application_profile_ref": "/api/applicationprofile?name=Redirect-HTTPS", "services": [{"port": 443, "enable_ssl": true},{"port": 80}], "ssl_key_and_certificate_refs": ["/api/sslkeyandcertificate?name=System-Default-Cert-EC"], "ssl_profile_ref": "/api/sslprofile/?name=System-Standard"}}'
 spec:
   ports:
