@@ -6,8 +6,14 @@ metadata:
   labels:
     feature: ssl-to-backend   
   annotations:
+    #avi_proxy: '{"pool":{"ssl_profile_ref":"/api/sslprofile?name=System-Standard", "default_server_port": 443}}'
     avi_proxy: '{"pool":{"ssl_profile_ref":"/api/sslprofile?name=System-Standard"}}'
 spec:
+  rules:
+  tls:
+  - hosts:
+    - ssl-to-backend.demo.corp.local
+    secretName: tls-ingress
   rules:
   - host: ssl-to-backend.demo.corp.local
     http:
@@ -15,4 +21,4 @@ spec:
       - path: "/"
         backend:
           serviceName: nginx-ssl-to-backend
-          servicePort: 80
+          servicePort: 443
