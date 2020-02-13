@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-${FEATURE_NAME}
+  namespace: avi-feature
+  labels:
+    feature: ${FEATURE_NAME} 
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      feature: ${FEATURE_NAME}       
+  template:
+    metadata:
+      labels:
+        feature: ${FEATURE_NAME} 
+    spec:
+      containers:
+      - name: nginx-${FEATURE_NAME} 
+        image: nginx:stable-alpine
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - name: nginx
+          mountPath: /etc/nginx
+          readOnly: true
+      volumes:
+      - name: nginx
+        configMap:
+          name: nginx
