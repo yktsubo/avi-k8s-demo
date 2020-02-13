@@ -1,0 +1,21 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: nginx-lb-algorithm
+  namespace: avi-feature
+  labels:
+    feature: lb-algorithm
+  annotations:
+    #avi_proxy: '{"pool":{"lb_algorithm":"LB_ALGORITHM_LEAST_CONNECTIONS"}}'
+    #avi_proxy: '{"pool":{"lb_algorithm":"LB_ALGORITHM_ROUND_ROBIN"}}'
+    avi_proxy: '{"pool":{"lb_algorithm":"LB_ALGORITHM_CONSISTENT_HASH","lb_algorithm_hash":"LB_ALGORITHM_CONSISTENT_HASH_SOURCE_IP_ADDRESS"}}'
+avi_proxy:
+spec:
+  rules:
+  - host: lb-algorithm.demo.corp.local
+    http:
+      paths:
+      - path: "/"
+        backend:
+          serviceName: nginx-lb-algorithm
+          servicePort: 80
