@@ -6,10 +6,9 @@ metadata:
   labels:
     feature: lb-algorithm
   annotations:
-    #avi_proxy: '{"pool":{"lb_algorithm":"LB_ALGORITHM_LEAST_CONNECTIONS"}}'
-    #avi_proxy: '{"pool":{"lb_algorithm":"LB_ALGORITHM_ROUND_ROBIN"}}'
-    avi_proxy: '{"pool":{"lb_algorithm":"LB_ALGORITHM_CONSISTENT_HASH","lb_algorithm_hash":"LB_ALGORITHM_CONSISTENT_HASH_SOURCE_IP_ADDRESS"}}'
-avi_proxy:
+    #avi_proxy: '{"virtualservice":{"enable_rhi": true, "east_west_placement": false},"pool":{"lb_algorithm":"LB_ALGORITHM_LEAST_CONNECTIONS"}}'
+    #avi_proxy: '{"virtualservice":{"enable_rhi": true, "east_west_placement": false},"pool":{"lb_algorithm":"LB_ALGORITHM_ROUND_ROBIN"}}'
+    avi_proxy: '{"virtualservice":{"enable_rhi": true, "east_west_placement": false},"pool":{"lb_algorithm":"LB_ALGORITHM_CONSISTENT_HASH","lb_algorithm_hash":"LB_ALGORITHM_CONSISTENT_HASH_SOURCE_IP_ADDRESS"}}'
 spec:
   rules:
   - host: lb-algorithm.demo.corp.local

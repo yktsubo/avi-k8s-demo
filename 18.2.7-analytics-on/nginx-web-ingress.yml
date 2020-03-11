@@ -1,0 +1,34 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: nginx-analytics-on
+  namespace: avi-feature
+  labels:
+    feature: analytics-on
+  annotations:
+    avi_proxy: |
+      {"virtualservice": {
+          "enable_rhi": true,
+          "east_west_placement": false,
+          "analytics_policy": {
+            "client_insights": "NO_INSIGHTS",
+            "metrics_realtime_update": {
+              "duration": 0,
+              "enabled": true
+            },
+            "full_client_logs": {
+              "duration": 0,
+              "enabled": true
+            }
+         }
+        }
+      }
+spec:
+  rules:
+  - host: analytics-on.demo.corp.local
+    http:
+      paths:
+      - path: "/"
+        backend:
+          serviceName: nginx-analytics-on
+          servicePort: 80

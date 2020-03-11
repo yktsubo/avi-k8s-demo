@@ -6,10 +6,16 @@ metadata:
   labels:
     feature: ssl-to-backend   
   annotations:
-    #avi_proxy: '{"pool":{"ssl_profile_ref":"/api/sslprofile?name=System-Standard", "default_server_port": 443}}'
-    avi_proxy: '{"pool":{"ssl_profile_ref":"/api/sslprofile?name=System-Standard"}}'
+    avi_proxy: |
+      {"virtualservice":{
+        "enable_rhi": true,
+        "east_west_placement": false
+       },
+       "pool":{
+         "ssl_profile_ref":"/api/sslprofile?name=System-Standard"
+       }
+      }
 spec:
-  rules:
   tls:
   - hosts:
     - ssl-to-backend.demo.corp.local

@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-analytics-on
+  namespace: avi-feature
+  labels:
+    feature: analytics-on 
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      feature: analytics-on       
+  template:
+    metadata:
+      labels:
+        feature: analytics-on 
+    spec:
+      containers:
+      - name: nginx-analytics-on 
+        image: nginx:stable-alpine
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 80
+        - containerPort: 443
+        volumeMounts:
+        - name: nginx
+          mountPath: /etc/nginx
+          readOnly: true
+        - mountPath: /etc/nginx/ssl
+          name: nginx-ssl
+      volumes:
+      - name: nginx
+        configMap:
+          name: nginx
+      - name: nginx-ssl
+        secret:
+          secretName: nginx-ssl
