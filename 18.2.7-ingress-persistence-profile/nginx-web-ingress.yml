@@ -6,7 +6,15 @@ metadata:
   labels:
     feature: persistence-profile   
   annotations:
-    avi_proxy: '{"pool":{"application_persistence_profile_ref": "/api/applicationpersistenceprofile?name=System-Persistence-Http-Cookie"}}'
+    avi_proxy: |
+      {"virtualservice":
+        {"enable_rhi": true,
+         "east_west_placement": false
+        },
+       "pool":{
+         "application_persistence_profile_ref": "/api/applicationpersistenceprofile?name=System-Persistence-Http-Cookie"
+       }
+      }
 spec:
   rules:
   - host: persistence-profile.demo.corp.local

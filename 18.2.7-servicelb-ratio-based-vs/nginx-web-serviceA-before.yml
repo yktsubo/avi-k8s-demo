@@ -6,8 +6,12 @@ metadata:
   labels:
     feature: ratio-a-services 
   annotations:
-    #avi_proxy: '{"virtualservice": {"east_west_placement": false}, "poolgroup": {"members": [{"ratio": 10, "pool_ref": "/api/pool/?name=nginx-ratio-a-services-pool-80-tcp"}, {"ratio": 1, "pool_ref": "/api/pool/?name=nginx-ratio-b-services-pool-80-tcp"}]}}'
-    avi_proxy: '{"virtualservice": {"east_west_placement": false}}'
+    avi_proxy: |
+      {"virtualservice": {
+        "enable_rhi": true,
+        "east_west_placement": false
+        }
+      }
 spec:
   ports:
     - port: 80

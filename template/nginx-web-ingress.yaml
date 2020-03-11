@@ -5,6 +5,8 @@ metadata:
   namespace: avi-feature
   labels:
     feature: ${FEATURE_NAME}   
+  annotations:
+    avi_proxy: '{"virtualservice":{"enable_rhi": true, "east_west_placement": false}}'
 spec:
   rules:
   - host: ${FEATURE_NAME}.demo.corp.local

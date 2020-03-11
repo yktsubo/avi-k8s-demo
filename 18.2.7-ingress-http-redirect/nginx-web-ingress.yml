@@ -1,0 +1,32 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: nginx-ingress-http-redirect
+  namespace: avi-feature
+  labels:
+    feature: ingress-http-redirect   
+  annotations:
+    avi_proxy: |
+      {"virtualservice":
+        {"enable_rhi": true,
+         "application_profile_ref": "/api/applicationprofile?name=Redirect-HTTPS",
+         "services": [
+          {"port": 443, "enable_ssl": true},
+          {"port": 80}
+         ]
+        }
+      }
+spec:
+  tls:
+  - hosts:
+    - ingress-http-redirect.demo.corp.local
+    secretName: tls-ingress
+  rules:
+  - host: ingress-http-redirect.demo.corp.local
+    http:
+      paths:
+      - path: "/"
+        backend:
+          serviceName: nginx-ingress-http-redirect
+          servicePort: 80
+          
